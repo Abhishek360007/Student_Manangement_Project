@@ -28,6 +28,13 @@ class StudentManagementApplicationTests {
 	private MockMvc mockMvc;
 
 	@Test
+	void healthCheckAndHomePageArePublic() throws Exception {
+		mockMvc.perform(get("/actuator/health")).andExpect(status().isOk())
+				.andExpect(jsonPath("$.status").value("UP"));
+		mockMvc.perform(get("/")).andExpect(status().is3xxRedirection());
+	}
+
+	@Test
 	void seedDataIsLoaded() throws Exception {
 		mockMvc.perform(get("/api/v1/students").with(httpBasic("admin", "admin123"))).andExpect(status().isOk())
 				.andExpect(jsonPath("$.length()", Matchers.greaterThanOrEqualTo(5)));

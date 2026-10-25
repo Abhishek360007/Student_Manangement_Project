@@ -1,5 +1,8 @@
 # Student Management Project
 
+[![CI](https://github.com/Abhishek360007/Student_Manangement_Project/actions/workflows/ci.yml/badge.svg)](https://github.com/Abhishek360007/Student_Manangement_Project/actions/workflows/ci.yml)
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Abhishek360007/Student_Manangement_Project)
+
 A REST API for managing students, their departments and their projects, built with **Spring Boot 3**, **Spring Data JPA**, **Spring Security** and an in-memory **H2** database. It includes interactive API docs (Swagger UI).
 
 ## Features
@@ -75,6 +78,35 @@ All `/api/**` endpoints use HTTP Basic auth. The default login is `admin` / `adm
 ```bash
 APP_USERNAME=myuser APP_PASSWORD=secret ./mvnw spring-boot:run
 ```
+
+## Deployment
+
+The app ships with a `Dockerfile` and a Render blueprint (`render.yaml`), so it runs on any Docker host.
+
+### Render (free)
+
+1. Click the **Deploy to Render** button above, or go to Render → **New** → **Blueprint** and pick this repo.
+2. Render builds the Docker image and starts the service. It checks `/actuator/health` to confirm the app is up.
+3. A random `APP_PASSWORD` is generated for you. Find it in the service's **Environment** tab. The username is `admin`.
+4. Open `https://<your-service>.onrender.com`. It redirects to Swagger UI.
+
+Every push to `main` redeploys automatically.
+
+> Free Render services sleep after about 15 minutes without traffic, so the first request after that takes around a minute. The database is in-memory, so data resets to the sample data on every restart or deploy.
+
+### Docker (any host)
+
+```bash
+docker build -t student-management .
+docker run -p 8080:8080 -e APP_PASSWORD=change-me student-management
+```
+
+| Environment variable | Default | Purpose |
+|----------------------|---------|---------|
+| `PORT` | `8080` | HTTP port (set automatically by Render, Railway, etc.) |
+| `APP_USERNAME` | `admin` | API username |
+| `APP_PASSWORD` | `admin123` | API password: **always change this in production** |
+| `JAVA_OPTS` | `-XX:MaxRAMPercentage=75 -XX:+UseSerialGC` | JVM flags |
 
 ## API Reference
 

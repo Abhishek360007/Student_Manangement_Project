@@ -12,8 +12,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfiguration {
 
-	private static final String[] PUBLIC_PATHS = { "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**",
-			"/h2-console/**" };
+	private static final String[] PUBLIC_PATHS = { "/", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**",
+			"/h2-console/**", "/actuator/health/**" };
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
